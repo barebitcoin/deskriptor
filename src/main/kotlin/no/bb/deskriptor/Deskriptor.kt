@@ -1,3 +1,5 @@
+package no.bb.deskriptor
+
 fun main(args: Array<String>) {
     println("Hello World!")
 
