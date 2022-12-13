@@ -23,6 +23,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
+    implementation("org.bitcoindevkit:bdk-jvm:0.25.0")
+
     // TODO: these can be upgraded
     implementation("com.google.api.grpc:proto-google-common-protos:2.10.0")
     implementation("io.grpc:grpc-stub:1.46.0")
