@@ -1,8 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.parmet.buf.gradle.BUF_BUILD_DIR
+import com.parmet.buf.gradle.GENERATED_DIR
 
 plugins {
     kotlin("jvm") version "1.7.20"
     application
+
+    // Invoking `buf generate` as part of the build, 
+    // and place the sources in the correct places. 
+    // Why can't everything just be simple folders...
+    // https://github.com/andrewparmet/buf-gradle-plugin
+    id("com.parmet.buf") version "0.8.2"
 }
 
 group = "no.bb"
@@ -14,6 +22,14 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+
+    // TODO: these can be upgraded
+    implementation("com.google.api.grpc:proto-google-common-protos:2.10.0")
+    implementation("io.grpc:grpc-stub:1.46.0")
+    implementation("io.grpc:grpc-protobuf:1.46.0")
+    implementation("io.grpc:grpc-netty:1.46.0")
+    implementation("com.google.protobuf:protobuf-kotlin:3.20.1")
+    implementation("io.grpc:grpc-kotlin-stub:1.3.0")
 }
 
 tasks.test {
@@ -22,6 +38,19 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.named("compileKotlin").configure {
+    dependsOn("bufGenerate")
+}
+
+// TODO: is this needed?
+sourceSets["main"].kotlin {
+    srcDir("$buildDir/$BUF_BUILD_DIR/$GENERATED_DIR/kotlin")
+}
+
+sourceSets["main"].java {
+    srcDir("$buildDir/$BUF_BUILD_DIR/$GENERATED_DIR/java")
 }
 
 application {

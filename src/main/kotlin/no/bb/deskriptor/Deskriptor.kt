@@ -1,9 +1,17 @@
 package no.bb.deskriptor
 
-fun main(args: Array<String>) {
-    println("Hello World!")
+import no.bb.deskriptor.service.Service
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+import io.grpc.ServerBuilder
+import io.grpc.Server
+
+fun main(args: Array<String>) {
+    val port = 5000;
+
+    val server: Server = ServerBuilder.forPort(port).addService(Service()).build()
+
+    server.start()
+    println("Server started, listening on $port")
+
+    server.awaitTermination()
 }

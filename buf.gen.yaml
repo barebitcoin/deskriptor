@@ -1,0 +1,18 @@
+version: v1
+managed:
+  enabled: true
+  java_package_prefix: 'no' # default is 'com'
+
+# Note: we need both Java and Kotlin code
+plugins:
+  - plugin: buf.build/grpc/kotlin
+    out: kotlin
+
+  - plugin: buf.build/protocolbuffers/kotlin
+    out: kotlin
+
+  - plugin: buf.build/grpc/java
+    out: java
+
+  - plugin: buf.build/protocolbuffers/java
+    out: java

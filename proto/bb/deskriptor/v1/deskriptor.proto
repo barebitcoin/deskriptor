@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package bb.deskriptor.v1;
+
+service DeskriptorService {
+  rpc Derive(DeriveRequest) returns (DeriveResponse);
+}
+
+message DeriveRequest {
+  string in = 1;
+}
+message DeriveResponse {
+  string out = 1;
+}
