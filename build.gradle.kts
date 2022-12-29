@@ -16,6 +16,8 @@ plugins {
 group = "no.bb"
 version = "1.0-SNAPSHOT"
 
+val kotest = "5.5.4"
+
 repositories {
     mavenCentral()
 }
@@ -32,6 +34,10 @@ dependencies {
     implementation("io.grpc:grpc-netty:1.46.0")
     implementation("com.google.protobuf:protobuf-kotlin:3.20.1")
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")
+
+    testImplementation("io.kotest:kotest-runner-junit5:$kotest")
+    testImplementation("io.kotest:kotest-assertions-core:$kotest")
+    testImplementation("io.kotest:kotest-framework-datatest:$kotest")
 }
 
 tasks.test {

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package bb.deskriptor.v1alpha;
+
+service DeskriptorService {
+  rpc Derive(DeriveRequest) returns (DeriveResponse);
+}
+
+message DeriveRequest {
+  // The input given to the script type. For the time being only supports
+  // single xpubs.
+  string input = 1;
+
+  // The address index to generate for.
+  uint32 index = 2;
+
+  // The kind of address to generate. Required field.
+  ScriptType script_type = 3;
+
+  // Generate an address on the change derivation path. Defaults to false,
+  // which means we generate for the external derivation path.
+  bool change = 4;
+}
+
+message DeriveResponse {
+  string address = 1;
+
+  uint32 index = 2;
+}
+
+enum ScriptType {
+  SCRIPT_TYPE_UNSPECIFIED = 0;
+
+  // Witness pay-to-pubkey-hash. Corresponds to BIP84.
+  SCRIPT_TYPE_WPKH = 1;
+
+  // Pay-to-pubkey-hash. Corresponds to BIP44.
+  SCRIPT_TYPE_PKH = 2;
+}
+
+// This is included in the details section of an error returned from derivation.
+message Error {
+  ErrorCode error = 1;
+}
+
+enum ErrorCode {
+  ERROR_UNSPECIFIED = 0;
+
+  // The supplied xpub was invalid.
+  ERROR_INVALID_XPUB = 1;
+
+  ERROR_UNSUPPORTED_INPUT = 2;
+}
