@@ -31,6 +31,7 @@ dependencies {
     implementation("com.google.api.grpc:proto-google-common-protos:2.10.0")
     implementation("io.grpc:grpc-stub:1.46.0")
     implementation("io.grpc:grpc-protobuf:1.46.0")
+    implementation("io.grpc:grpc-services:1.46.0")
     implementation("io.grpc:grpc-netty:1.46.0")
     implementation("com.google.protobuf:protobuf-kotlin:3.20.1")
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")

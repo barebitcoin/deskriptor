@@ -1,6 +1,7 @@
 package no.bb.deskriptor
 
 import io.grpc.Server
+import io.grpc.protobuf.services.ProtoReflectionService
 import io.grpc.ServerBuilder
 import no.bb.deskriptor.service.Service
 import org.bitcoindevkit.*
@@ -17,6 +18,7 @@ fun main(args: Array<String>) {
     val server: Server = ServerBuilder
         .forPort(port)
         .addService(service)
+        .addService(ProtoReflectionService.newInstance())
         .build()
 
     server.start()
