@@ -22,9 +22,9 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
         } catch (exc: BdkException) {
             val (message, code) = when {
                 exc.message!!.contains("Error while parsing xkey") ->
-                    Pair("invalid XPUB", ErrorCode.ERROR_INVALID_XPUB)
+                    Pair("invalid XPUB", ErrorCode.ERROR_CODE_INVALID_XPUB)
 
-                else -> Pair(exc.message!!, ErrorCode.ERROR_UNSPECIFIED)
+                else -> Pair(exc.message!!, ErrorCode.ERROR_CODE_UNSPECIFIED)
             }
 
             throw newStatus(Code.INVALID_ARGUMENT, message, code)
@@ -47,7 +47,7 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
             !request.input.startsWith("xpub") ->
                 throw newStatus(
                     Code.INVALID_ARGUMENT, "did not receive an xpub",
-                    ErrorCode.ERROR_UNSUPPORTED_INPUT,
+                    ErrorCode.ERROR_CODE_UNSUPPORTED_INPUT,
                 )
         }
 
