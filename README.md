@@ -1,6 +1,19 @@
 `deskriptor` is a small Kotlin application that exposes some BDK descriptor
 functionality over gRPC. All operations happen in-memory, with no persistence.
 
+# Quickstart
+
+```bash
+$ ./gradlew bufGenerate # generate code
+$ ./gradlew build       # build app (also runs tests)
+
+$ docker build -t deskriptor . 
+$ docker run -p 5000:5000 --rm deskriptor 
+
+# Ding! Or, at least you get an error response. Means you got it running!
+$ grpcurl -plaintext localhost:5000 bb.deskriptor.v1alpha.DeskriptorService.Derive
+```
+
 # BIP44/BIP32 address generation
 
 Because it's impossible to remember:
