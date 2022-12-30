@@ -1,3 +1,4 @@
 # Gradle build stuff
 .gradle/
 build/
+.envrc

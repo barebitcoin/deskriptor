@@ -1,0 +1,8 @@
+.git
+.envrc
+.idea
+build
+.github
+.gradle
+Dockerfile
+README.md
