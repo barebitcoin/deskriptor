@@ -1,5 +1,8 @@
 package no.bb.deskriptor.service
 
+import io.grpc.StatusException
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldThrowMessage
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
@@ -26,6 +29,19 @@ data class DeriveInput(val scriptType: ScriptType, val index: Int, val input: St
 }
 
 class ServiceTest : FunSpec({
+    context("invalid xpub/zpub/ypub") {
+        val invalids = listOf("sumthinelse", "xpub1111", "zpub1111", "ypub1111")
+        invalids.forEach { invalid ->
+
+            shouldThrow<StatusException> {
+                val srv = Service(Network.BITCOIN)
+                srv.deriveNonSuspend(deriveRequest {
+                    input = invalid
+                    scriptType = SCRIPT_TYPE_PKH
+                })
+            }
+        }
+    }
     context("torkels electrum wallet") {
         withData(
             DeriveInput(
@@ -51,6 +67,17 @@ class ServiceTest : FunSpec({
 
     // generated with https://iancoleman.io/bip39/
     context("iancoleman data") {
+
+        // grief stairs dust provide surface often mutual salt margin trophy bleak spend
+        context("zpub") {
+            val srv = Service(Network.BITCOIN)
+            val derived = srv.deriveNonSuspend(deriveRequest {
+                input =
+                    "zpub6rDFfjN1U9sKvLCzW6Gfz7ibFdw4qos7X3ufHVxGqi5cR6pSeEEcm3yrx96guzCYLd9hiREUGEeqjWiYnBNKKcW8dg3scTFep8E9MvEPSmd"
+                scriptType = SCRIPT_TYPE_WPKH
+            })
+            derived.address shouldBe "bc1qtk4mftgkya9fc4suxu3q20hw5xx8q5ly3034n5"
+        }
 
         // seed: filter west draft sudden upon kite dawn client sadness turkey senior parrot
         context("pkh") {

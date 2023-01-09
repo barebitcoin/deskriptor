@@ -21,9 +21,7 @@ Because it's impossible to remember:
 * BIP32 HD wallets
 * BIP44: Multi-account hierarchies
 
-This service supports generating addresses from XPUBs. If you don't have an XPUB,
-you need to convert it before passing it in. This can be done with this tool: https://jlopp.github.io/xpub-converter/.
-This might be added as functionality here, who knows.
+This service supports generating addresses from XPUBs, ZPUBs and YPUBs. 
 
 # Why?
 

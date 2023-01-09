@@ -5,6 +5,7 @@ import com.google.rpc.Status
 import com.google.protobuf.Any
 import io.grpc.StatusException
 import io.grpc.protobuf.StatusProto
+import no.bb.deskriptor.diffpub.toXpub
 import no.bb.deskriptor.v1alpha.*
 import no.bb.deskriptor.logger
 import org.bitcoindevkit.*
@@ -44,18 +45,31 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
 
             request.input == "" ->
                 throw newStatus(Code.INVALID_ARGUMENT, "input cannot be empty")
+        }
 
-            !request.input.startsWith("xpub") ->
-                throw newStatus(
-                    Code.INVALID_ARGUMENT, "did not receive an xpub",
-                    ErrorCode.ERROR_CODE_UNSUPPORTED_INPUT,
-                )
+        // The BDK descriptor code only support XPUBs. YPUBs/ZPUBs are really
+        // just rather dumb wrappers around the same data. Convert it to an XPUB,
+        // and use that. Problem solved!
+        fun xpubOrThrow(input: String, code: ErrorCode): String {
+            try {
+                return toXpub(input)
+            } catch (exc: Exception) {
+                throw newStatus(Code.INVALID_ARGUMENT, exc.message!!, code)
+            }
+        }
+
+        val xpub = when {
+            request.input.startsWith("xpub") -> xpubOrThrow(request.input, ErrorCode.ERROR_CODE_INVALID_XPUB)
+            request.input.startsWith("zpub") -> xpubOrThrow(request.input, ErrorCode.ERROR_CODE_INVALID_ZPUB)
+            request.input.startsWith("ypub") -> xpubOrThrow(request.input, ErrorCode.ERROR_CODE_INVALID_YPUB)
+
+            else -> throw newStatus(Code.INVALID_ARGUMENT, "did not receive an xpub, zpub or ypub")
         }
 
         val extChain = if (request.change) "1" else "0"
         val addr = innerDerive(
             request.scriptType,
-            "${request.input}/$extChain",
+            "${xpub}/$extChain",
             request.index
 
         )
