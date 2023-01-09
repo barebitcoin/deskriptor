@@ -49,5 +49,11 @@ enum ErrorCode {
   // The supplied xpub was invalid.
   ERROR_CODE_INVALID_XPUB = 1;
 
+  // The supplied ypub was invalid.
+  ERROR_CODE_INVALID_YPUB = 3;
+
+  // The supplied zpub was invalid.
+  ERROR_CODE_INVALID_ZPUB = 4;
+
   ERROR_CODE_UNSUPPORTED_INPUT = 2;
 }

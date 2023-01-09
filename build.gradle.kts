@@ -40,6 +40,9 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("org.slf4j:slf4j-simple:2.0.3")
 
+    // base58check stuff
+    implementation("fr.acinq.bitcoin:bitcoin-kmp-jvm:0.10.0")
+
     testImplementation("io.kotest:kotest-runner-junit5:$kotest")
     testImplementation("io.kotest:kotest-assertions-core:$kotest")
     testImplementation("io.kotest:kotest-framework-datatest:$kotest")
