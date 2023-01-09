@@ -6,6 +6,7 @@ import com.google.protobuf.Any
 import io.grpc.StatusException
 import io.grpc.protobuf.StatusProto
 import no.bb.deskriptor.v1alpha.*
+import no.bb.deskriptor.logger
 import org.bitcoindevkit.*
 
 class Service(private val network: Network) : DeskriptorServiceGrpcKt.DeskriptorServiceCoroutineImplBase() {
@@ -29,7 +30,7 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
 
             throw newStatus(Code.INVALID_ARGUMENT, message, code)
         } catch (exc: Exception) {
-            println("warning: unhandled exception: $exc")
+            logger.warn { "unhandled exception: $exc" }
             throw exc
         }
     }
