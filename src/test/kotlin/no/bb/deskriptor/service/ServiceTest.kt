@@ -2,7 +2,6 @@ package no.bb.deskriptor.service
 
 import io.grpc.StatusException
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.assertions.throwables.shouldThrowMessage
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
@@ -123,6 +122,30 @@ class ServiceTest : FunSpec({
                     2,
                     "xpub6CLreXSYMsHSE9rMc1EsdVuM8LW9GvZA45AKTipwWgTZrkoH5TQADKGuaSRAjhWVK5MgZAPG8KfeV1TbRa8vn1D5dd44J3o5MZ7agPLw47Z",
                     "bc1q3khmgvvmy2a5cm9c88sp6fggg5lh3mzm452ajn",
+                ),
+            ) { it.assert() }
+        }
+
+        // pledge excuse sunny slim laptop address deer arena six scene flavor kit
+        context("wpkh-in-sh") {
+            withData(
+                DeriveInput(
+                    SCRIPT_TYPE_WPKH_NESTED,
+                    0,
+                    "ypub6Y7oSCWrRaxYQNSndbanWMzVUg4KXNvsXamJoeK5dbCRF9fGFjKcCGYLzPShcoP1d5FCjK3ohZLa7EF6XGeVdK7VGGtNBReGJsLaWpj4wUD",
+                    "39aZgVG6FjZJXQcB1WFZiU1JovGbbchBvK",
+                ),
+                DeriveInput(
+                    SCRIPT_TYPE_WPKH_NESTED,
+                    1,
+                    "ypub6Y7oSCWrRaxYQNSndbanWMzVUg4KXNvsXamJoeK5dbCRF9fGFjKcCGYLzPShcoP1d5FCjK3ohZLa7EF6XGeVdK7VGGtNBReGJsLaWpj4wUD",
+                    "3Ezc4TeDSTES491t7WDDRDsKrKJzhwYFnp",
+                ),
+                DeriveInput(
+                    SCRIPT_TYPE_WPKH_NESTED,
+                    2,
+                    "ypub6Y7oSCWrRaxYQNSndbanWMzVUg4KXNvsXamJoeK5dbCRF9fGFjKcCGYLzPShcoP1d5FCjK3ohZLa7EF6XGeVdK7VGGtNBReGJsLaWpj4wUD",
+                    "3GFNWYzm4xarKufpD42e7AsCSBWmJ4zoBH",
                 ),
             ) { it.assert() }
         }

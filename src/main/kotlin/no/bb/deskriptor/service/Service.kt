@@ -12,7 +12,10 @@ import org.bitcoindevkit.*
 
 class Service(private val network: Network) : DeskriptorServiceGrpcKt.DeskriptorServiceCoroutineImplBase() {
     fun innerDerive(scriptType: ScriptType, input: String, index: Int): AddressInfo {
-        val descriptor = "${Script(scriptType)}($input/$index)"
+        var descriptor = "${Script(scriptType)}($input/$index)"
+        if (scriptType == ScriptType.SCRIPT_TYPE_WPKH_NESTED) {
+            descriptor += ")"
+        }
 
         try {
             val wallet = Wallet(
@@ -88,6 +91,10 @@ data class Script(private val script: ScriptType) {
     override fun toString(): String = when (script) {
         ScriptType.SCRIPT_TYPE_WPKH -> "wpkh"
         ScriptType.SCRIPT_TYPE_PKH -> "pkh"
+        // This is kinda bad... Should instead code up a scheme with wrapping
+        // operators, and replace this `when` block with something that returns
+        // a list of operators. For another day.
+        ScriptType.SCRIPT_TYPE_WPKH_NESTED -> "sh(wpkh"
         ScriptType.SCRIPT_TYPE_UNSPECIFIED -> throw newStatus(Code.INVALID_ARGUMENT, "unspecified")
         ScriptType.UNRECOGNIZED -> throw newStatus(Code.INVALID_ARGUMENT, "unrecognized script type: $script")
     }
