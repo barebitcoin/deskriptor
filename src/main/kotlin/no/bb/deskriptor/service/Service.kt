@@ -11,7 +11,7 @@ import no.bb.deskriptor.logger
 import org.bitcoindevkit.*
 
 class Service(private val network: Network) : DeskriptorServiceGrpcKt.DeskriptorServiceCoroutineImplBase() {
-    fun innerDerive(scriptType: ScriptType, input: String, index: Int): AddressInfo {
+    private fun innerDerive(scriptType: ScriptType, input: String, index: Int): Pair<AddressInfo, String> {
         var descriptor = "${Script(scriptType)}($input/$index)"
         if (scriptType == ScriptType.SCRIPT_TYPE_WPKH_NESTED) {
             descriptor += ")"
@@ -23,7 +23,7 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
                 network, DatabaseConfig.Memory,
             )
 
-            return wallet.getAddress(addressIndex = AddressIndex.LAST_UNUSED)
+            return Pair(wallet.getAddress(addressIndex = AddressIndex.LAST_UNUSED), descriptor)
         } catch (exc: BdkException) {
             val (message, code) = when {
                 exc.message!!.contains("Error while parsing xkey") ->
@@ -70,7 +70,7 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
         }
 
         val extChain = if (request.change) "1" else "0"
-        val addr = innerDerive(
+        val (addr, descriptor) = innerDerive(
             request.scriptType,
             "${xpub}/$extChain",
             request.index
@@ -78,7 +78,7 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
         )
         return DeriveResponse.newBuilder()
             .setAddress(addr.address)
-            .setIndex(addr.index.toInt())
+            .setDesc(descriptor)
             .build()
     }
 

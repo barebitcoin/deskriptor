@@ -25,7 +25,14 @@ message DeriveRequest {
 message DeriveResponse {
   string address = 1;
 
-  uint32 index = 2;
+  // For some reason this is not included in the returned address info from BDK.
+  // Perhaps we're using the API in a strange way?
+  reserved 'index';
+  reserved 2;
+
+  // The descriptor used for deriving the address. Not called 'descriptor' as
+  // that interops poorly with some languages.
+  string desc = 3;
 }
 
 enum ScriptType {
