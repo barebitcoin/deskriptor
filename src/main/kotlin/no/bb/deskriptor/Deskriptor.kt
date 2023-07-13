@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
         return
     }
 
-    val port = 5000
+    val port = 5005
 
     val service = Service(Network.BITCOIN)
     val server: Server =

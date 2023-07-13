@@ -8,10 +8,10 @@ $ ./gradlew bufGenerate # generate code
 $ ./gradlew build       # build app (also runs tests)
 
 $ docker build -t deskriptor . 
-$ docker run -p 5000:5000 --rm deskriptor 
+$ docker run -p 5005:5005 --rm deskriptor 
 
 # Ding! Or, at least you get an error response. Means you got it running!
-$ grpcurl -plaintext localhost:5000 bb.deskriptor.v1alpha.DeskriptorService.Derive
+$ grpcurl -plaintext localhost:5005 bb.deskriptor.v1alpha.DeskriptorService.Derive
 ```
 
 # BIP44/BIP32 address generation
