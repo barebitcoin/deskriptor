@@ -3,13 +3,28 @@ package no.bb.deskriptor
 import io.grpc.*
 import io.grpc.ForwardingServerCall.SimpleForwardingServerCall
 import io.grpc.protobuf.services.ProtoReflectionService
-import mu.KotlinLogging
 import no.bb.deskriptor.service.Service
-import org.bitcoindevkit.*
+import org.bitcoindevkit.Network
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.util.logging.LogManager
+import java.util.logging.Logger
 
-val logger = KotlinLogging.logger { }
+val logger = Logger.getGlobal()!!
 
 fun main(args: Array<String>) {
+    // If a file logging.properties exists in the working directory,
+    // read it and pass it into the logging manager.
+    // Why is Java logging configuration such a clusterfuck?
+    // I've spent multiple hours just setting some logging
+    // values...
+    try {
+        val fis = FileInputStream("logging.properties")
+        LogManager.getLogManager().readConfiguration(fis)
+    } catch (exc: FileNotFoundException) {
+        // The file doesn't exist, and that's OK.
+    }
+
     if ("-h" in args || "--help" in args) {
         println("usage: just start it")
         return
@@ -55,7 +70,7 @@ class LogDelegate<ReqT, RespT>(private val delegate: ServerCall<ReqT, RespT>, pr
             "$keyName=$value"
         }
 
-        logger.info { "$method: $desc $metadataKeyValue" }
+        logger.info("$method: $desc $metadataKeyValue")
         super.close(status, trailers)
     }
 }

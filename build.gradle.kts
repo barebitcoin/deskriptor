@@ -1,6 +1,7 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 import com.parmet.buf.gradle.BUF_BUILD_DIR
 import com.parmet.buf.gradle.GENERATED_DIR
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.20"
@@ -35,10 +36,6 @@ dependencies {
     implementation("io.grpc:grpc-netty:1.46.0")
     implementation("com.google.protobuf:protobuf-kotlin:3.20.1")
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")
-
-    // logging
-    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
-    implementation("org.slf4j:slf4j-simple:2.0.3")
 
     // base58check stuff
     implementation("fr.acinq.bitcoin:bitcoin-kmp-jvm:0.10.0")
