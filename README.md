@@ -7,12 +7,24 @@ functionality over gRPC. All operations happen in-memory, with no persistence.
 $ ./gradlew bufGenerate # generate code
 $ ./gradlew build       # build app (also runs tests)
 
-$ docker build -t deskriptor . 
+$ docker buildx build --platform linux/amd64 -t deskriptor . 
 $ docker run -p 5005:5005 --rm deskriptor 
 
-# Ding! Or, at least you get an error response. Means you got it running!
-$ grpcurl -plaintext localhost:5005 bb.deskriptor.v1alpha.DeskriptorService.Derive
+$ request='{"input":"xpub6CggtnWmbpCdtUsZqyzAZcSNf5gFtybrRn4jgiWkRY7Nmu765xD2ZnjUdwwRMK59hPqwkdGNiLmkZq7kpTyzmdaFsJySVXwpTNCdVKP5b58", "index":3, "scriptType":"SCRIPT_TYPE_WPKH", "change":false}'
+
+$ buf curl  --protocol grpc --http2-prior-knowledge \
+            --emit-defaults --data=$request http://localhost:5005/bb.deskriptor.v1alpha.DeskriptorService/Derive
+{
+  "address": "bc1qmtkc6ecfvxhsg95xn7m74xgw85qzj5x26vxddw",
+  "desc": "wpkh(xpub6CggtnWmbpCdtUsZqyzAZcSNf5gFtybrRn4jgiWkRY7Nmu765xD2ZnjUdwwRMK59hPqwkdGNiLmkZq7kpTyzmdaFsJySVXwpTNCdVKP5b58/0/3)"
+}
 ```
+
+# Build Docker image
+
+```bash
+$ docker buildx build --platform linux/amd64 -t barebitcoin/deskriptor .
+``` 
 
 # BIP44/BIP32 address generation
 
