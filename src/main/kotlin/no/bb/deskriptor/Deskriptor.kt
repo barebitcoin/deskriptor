@@ -2,6 +2,7 @@ package no.bb.deskriptor
 
 import io.grpc.*
 import io.grpc.ForwardingServerCall.SimpleForwardingServerCall
+import io.grpc.protobuf.services.HealthStatusManager
 import io.grpc.protobuf.services.ProtoReflectionService
 import no.bb.deskriptor.service.Service
 import org.bitcoindevkit.Network
@@ -37,6 +38,7 @@ fun main(args: Array<String>) {
         ServerBuilder.forPort(port)
             .addService(service)
             .addService(ProtoReflectionService.newInstance())
+            .addService(HealthStatusManager().healthService)
             .intercept(ServerLogInterceptor()).build()
 
     server.start()
