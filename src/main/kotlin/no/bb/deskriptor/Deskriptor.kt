@@ -2,9 +2,11 @@ package no.bb.deskriptor
 
 import io.grpc.*
 import io.grpc.ForwardingServerCall.SimpleForwardingServerCall
+import io.grpc.health.v1.HealthCheckResponse
 import io.grpc.protobuf.services.HealthStatusManager
 import io.grpc.protobuf.services.ProtoReflectionService
 import no.bb.deskriptor.service.Service
+import no.bb.deskriptor.v1alpha.DeskriptorServiceGrpc
 import org.bitcoindevkit.Network
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -33,12 +35,14 @@ fun main(args: Array<String>) {
 
     val port = 5005
 
+    val healthManager = HealthStatusManager()
+    healthManager.setStatus(DeskriptorServiceGrpc.SERVICE_NAME, HealthCheckResponse.ServingStatus.SERVING)
     val service = Service(Network.BITCOIN)
     val server: Server =
         ServerBuilder.forPort(port)
             .addService(service)
             .addService(ProtoReflectionService.newInstance())
-            .addService(HealthStatusManager().healthService)
+            .addService(healthManager.healthService)
             .intercept(ServerLogInterceptor()).build()
 
     server.start()
