@@ -33,7 +33,7 @@ class Service(private val network: Network) : DeskriptorServiceGrpcKt.Deskriptor
             }
 
             throw newStatus(Code.INVALID_ARGUMENT, message, code)
-        } catch (exc: Exception) {
+        } catch (exc: Throwable) {
             logger.info("unhandled exception: $exc")
             throw exc
         }
