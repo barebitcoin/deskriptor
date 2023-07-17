@@ -66,11 +66,13 @@ class LogDelegate<ReqT, RespT>(private val delegate: ServerCall<ReqT, RespT>, pr
             "${status?.code}: ${status?.description}"
         }
 
-        val metadataKeyValue = headers.keys().joinToString(separator = "\t", prefix = "\t") { keyName ->
-            val key = Metadata.Key.of(keyName, Metadata.ASCII_STRING_MARSHALLER)
-            val value = headers.get(key)
-            "$keyName=$value"
-        }
+        val metadataKeyValue = headers.keys()
+            .filter { key -> !key.endsWith("-bin") } // throws an error on marshaling
+            .joinToString(separator = "\t", prefix = "\t") { keyName ->
+                val key = Metadata.Key.of(keyName, Metadata.ASCII_STRING_MARSHALLER)
+                val value = headers.get(key)
+                "$keyName=$value"
+            }
 
         logger.info("$method: $desc $metadataKeyValue")
         super.close(status, trailers)
