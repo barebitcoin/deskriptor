@@ -64,6 +64,72 @@ class ServiceTest : FunSpec({
         ) { it.assert() }
     }
 
+    // https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki
+    context("bip86 test vectors") {
+        withData(
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                0,
+                "xpub6BgBgsespWvERF3LHQu6CnqdvfEvtMcQjYrcRzx53QJjSxarj2afYWcLteoGVky7D3UKDP9QyrLprQ3VCECoY49yfdDEHGCtMMj92pReUsQ",
+                "bc1p5cyxnuxmeuwuvkwfem96lqzszd02n6xdcjrs20cac6yqjjwudpxqkedrcr",
+            ),
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                1,
+                "xpub6BgBgsespWvERF3LHQu6CnqdvfEvtMcQjYrcRzx53QJjSxarj2afYWcLteoGVky7D3UKDP9QyrLprQ3VCECoY49yfdDEHGCtMMj92pReUsQ",
+                "bc1p4qhjn9zdvkux4e44uhx8tc55attvtyu358kutcqkudyccelu0was9fqzwh",
+            ),
+        ) { it.assert() }
+    }
+
+    // stand sail fiction affair arch deer grow sight keen thing faculty virus
+    context("torkels sparrow wallet") {
+        withData(
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                0,
+                "xpub6DDqmwVaNoavxHc8Agj4XuEVCC3RvuXHcQVcmVv59KivcBEoJG6brcQ49NCRtf25vA3YNPqeJwEa4TFCw1y5RGzULb72D3TQGV67xpEdH4j",
+                "bc1pcz7de4f64c4jm537f436cr7sq7wgfpfhdy4nf9avf9x9nac8fa5qwccp0z",
+            ),
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                1,
+                "xpub6DDqmwVaNoavxHc8Agj4XuEVCC3RvuXHcQVcmVv59KivcBEoJG6brcQ49NCRtf25vA3YNPqeJwEa4TFCw1y5RGzULb72D3TQGV67xpEdH4j",
+                "bc1pzstq526x3xujh88jnmpvaq2tq8yk6dl2cu6a87qvzyslumxckwxq3yl7nf",
+            ),
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                2,
+                "xpub6DDqmwVaNoavxHc8Agj4XuEVCC3RvuXHcQVcmVv59KivcBEoJG6brcQ49NCRtf25vA3YNPqeJwEa4TFCw1y5RGzULb72D3TQGV67xpEdH4j",
+                "bc1ph2r5c6c25520gqxsemvpt0pnue28jp2tlza2kdvmmtkqva30hs4qjp9nhj",
+            ),
+        ) { it.assert() }
+    }
+
+    context("bos sparrow wallet") {
+        withData(
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                0,
+                "xpub6CPJGRoLhx72USPrYaGsiDZq6rBu6gzJruACdcyoRjffLGmecgW9rcojBmzQgw5Qsd8PN4KfSbiycVzDicvUW5m6RG9gVd41SjAVPcjWdq9",
+                "bc1pzzr5kkz5rtxw733tst7yxex8kgy2hanq0jchtt0xvp7cajqz9dkqj4pxev",
+            ),
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                1,
+                "xpub6CPJGRoLhx72USPrYaGsiDZq6rBu6gzJruACdcyoRjffLGmecgW9rcojBmzQgw5Qsd8PN4KfSbiycVzDicvUW5m6RG9gVd41SjAVPcjWdq9",
+                "bc1psxyyfk9e4lykx7ghq4g44hunn75rmh3zvuxc5mud2tuae63yk3gqq2msra",
+            ),
+            DeriveInput(
+                SCRIPT_TYPE_P2TR,
+                2,
+                "xpub6CPJGRoLhx72USPrYaGsiDZq6rBu6gzJruACdcyoRjffLGmecgW9rcojBmzQgw5Qsd8PN4KfSbiycVzDicvUW5m6RG9gVd41SjAVPcjWdq9",
+                "bc1pfmkr97h8dy50srk4p5c9c3fxg8m2uum4mrrfears2c7pt2ljx2xqu4ddwk",
+            ),
+        ) { it.assert() }
+    }
+
+
     // generated with https://iancoleman.io/bip39/
     context("iancoleman data") {
 
