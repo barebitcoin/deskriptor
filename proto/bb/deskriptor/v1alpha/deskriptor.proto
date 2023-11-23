@@ -46,6 +46,9 @@ enum ScriptType {
 
   // Witness pay-to-pubkey-hash nested in P2SH. Corresponds to BIP 49
   SCRIPT_TYPE_WPKH_NESTED = 3;
+
+  // Pay-to-taproot. Corresponds to BIP341.
+  SCRIPT_TYPE_P2TR = 4;
 }
 
 // This is included in the details section of an error returned from derivation.
