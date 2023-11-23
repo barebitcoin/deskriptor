@@ -95,6 +95,7 @@ data class Script(private val script: ScriptType) {
         // operators, and replace this `when` block with something that returns
         // a list of operators. For another day.
         ScriptType.SCRIPT_TYPE_WPKH_NESTED -> "sh(wpkh"
+        ScriptType.SCRIPT_TYPE_P2TR -> "tr"
         ScriptType.SCRIPT_TYPE_UNSPECIFIED -> throw newStatus(Code.INVALID_ARGUMENT, "unspecified")
         ScriptType.UNRECOGNIZED -> throw newStatus(Code.INVALID_ARGUMENT, "unrecognized script type: $script")
     }
